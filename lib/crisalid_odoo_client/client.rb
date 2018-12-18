@@ -34,19 +34,24 @@ module CrisalidOdooClient
       @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'search', rules, params)
     end
 
-    def search_read(table, rules: [[]], params: {})
+    def search_read(table, rules: [[]], params: {}, fields: [])
+      params[:fields] = fields if fields.size > 0
+
       @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'search_read', rules, params)
     end
 
-    def find(table, ids = [], rules: [[]], params: {}, fields: [], first: false)
+    def find(table, ids = [], params: {}, fields: [], first: false)
       params[:limit]  = 1      if first
       params[:fields] = fields if fields.size > 0
 
-      if ids.empty?
-        search_read(table, rules: rules, params: params)
-      else
-        @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'read', [ids], params)
-      end
+      @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'read', [ids], params)
+    end
+
+    def where(table, rules: [[]], params: {}, fields: [], first: false)
+      params[:limit]  = 1      if first
+      params[:fields] = fields if fields.size > 0
+
+      search_read(table, rules: rules, params: params)
     end
 
     def create(table, params)

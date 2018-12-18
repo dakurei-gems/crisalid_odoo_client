@@ -1,5 +1,7 @@
 module CrisalidOdooClient
   class Client
+    DEFAULT_TIMEOUT = 60
+
     require 'xmlrpc/client'
 
     attr_reader :odoo_url
@@ -19,7 +21,7 @@ module CrisalidOdooClient
       end
 
       if @uid != false
-        @models = XMLRPC::Client.new2("#{@odoo_url}/xmlrpc/2/object").proxy
+        @models = XMLRPC::Client.new2("#{@odoo_url}/xmlrpc/2/object", nil, DEFAULT_TIMEOUT).proxy
         # Client connected
       else
         # Client not connected
@@ -98,7 +100,7 @@ module CrisalidOdooClient
 
     def connect
       begin
-        common = XMLRPC::Client.new2("#{@odoo_url}/xmlrpc/2/common")
+        common = XMLRPC::Client.new2("#{@odoo_url}/xmlrpc/2/common", nil, DEFAULT_TIMEOUT)
         common.call('version')
         common.call('authenticate', @odoo_db, @odoo_user, @odoo_pass, {})
       rescue

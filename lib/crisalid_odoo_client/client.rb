@@ -62,6 +62,18 @@ module CrisalidOdooClient
       end
     end
 
+    def create_in_batch(table, headers, params)
+      if headers.is_a?(Array) && headers.size > 0
+        if params.is_a?(Array) && params.size > 0 && params.first.is_a?(Array) && params.first.size == headers.size
+          @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'load', [headers, params])["ids"]
+        else
+          raise CrisalidOdooClient::Error::OdooResourceManagerError
+        end
+      else
+        raise CrisalidOdooClient::Error::OdooResourceManagerError
+      end
+    end
+
     def update(table, ids, params)
       if params.is_a?(Hash) && params.size > 0 && ids.is_a?(Array) && ids.size > 0
         @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'write', [ids, params])

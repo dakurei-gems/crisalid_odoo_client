@@ -1,0 +1,24 @@
+PATH
+  remote: .
+  specs:
+    crisalid_odoo_client (1.0.0)
+      xmlrpc
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.11.3)
+    rake (12.3.2)
+    xmlrpc (0.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  crisalid_odoo_client!
+  minitest
+  rake
+
+BUNDLED WITH
+   1.17.1

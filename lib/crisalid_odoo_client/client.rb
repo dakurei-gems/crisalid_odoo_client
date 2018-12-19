@@ -60,7 +60,7 @@ module CrisalidOdooClient
       if params.is_a?(Hash) && params.size > 0
         @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'create', [params])
       else
-        raise CrisalidOdooClient::Error::OdooResourceManagerError
+        raise CrisalidOdooClient::Error::OdooResourceManagerError.new('params must be a non empty Hash')
       end
     end
 
@@ -69,10 +69,10 @@ module CrisalidOdooClient
         if params.is_a?(Array) && params.size > 0 && params.first.is_a?(Array) && params.first.size == headers.size
           @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'load', [headers, params])["ids"]
         else
-          raise CrisalidOdooClient::Error::OdooResourceManagerError
+          raise CrisalidOdooClient::Error::OdooResourceManagerError.new('params must be a non empty Array of Array who has the same size as headers')
         end
       else
-        raise CrisalidOdooClient::Error::OdooResourceManagerError
+        raise CrisalidOdooClient::Error::OdooResourceManagerError.new('headers must be a non empty Array')
       end
     end
 
@@ -80,7 +80,7 @@ module CrisalidOdooClient
       if params.is_a?(Hash) && params.size > 0 && ids.is_a?(Array) && ids.size > 0
         @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'write', [ids, params])
       else
-        raise CrisalidOdooClient::Error::OdooResourceManagerError
+        raise CrisalidOdooClient::Error::OdooResourceManagerError.new('params must be a non empty Hash and ids must be a non empty Array')
       end
     end
 
@@ -88,7 +88,7 @@ module CrisalidOdooClient
       if ids.is_a?(Array) && ids.size > 0
         @models.execute_kw(@odoo_db, @uid, @odoo_pass, table, 'unlink', [ids])
       else
-        raise CrisalidOdooClient::Error::OdooResourceManagerError
+        raise CrisalidOdooClient::Error::OdooResourceManagerError.new('ids must be a non empty Array')
       end
     end
 
@@ -104,7 +104,7 @@ module CrisalidOdooClient
         common.call('version')
         common.call('authenticate', @odoo_db, @odoo_user, @odoo_pass, {})
       rescue
-        raise CrisalidOdooClient::Error::OdooConnectionError
+        raise CrisalidOdooClient::Error::OdooConnectionError.new('Error on connection, check the url and the database values')
       end
     end
 

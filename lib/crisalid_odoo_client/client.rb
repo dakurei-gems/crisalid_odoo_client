@@ -12,10 +12,10 @@ module CrisalidOdooClient
     attr_reader :timeout
 
     def initialize(odoo_url:, odoo_db:, odoo_user:, odoo_pass:, odoo_uid: nil, timeout: DEFAULT_TIMEOUT)
-      @odoo_url, @odoo_db, @timeout = odoo_url, odoo_db, timeout
+      @odoo_url, @odoo_db, @odoo_pass, @timeout = odoo_url, odoo_db, odoo_pass, timeout
 
       if @uid.nil?
-        @odoo_user, @odoo_pass = odoo_user, odoo_pass
+        @odoo_user = odoo_user
         @uid = connect
       end
 

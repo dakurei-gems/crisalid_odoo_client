@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    crisalid_odoo_client (1.2.4)
+    crisalid_odoo_client (2.0.0)
       xmlrpc (~> 0.3.0)
 
 GEM
